@@ -1,0 +1,50 @@
+{
+  "name": "@cristianquerolalves/sentinel-security",
+  "version": "1.0.0",
+  "description": "Sentinel — Advanced secret scanner (v2) — Code never leaks.",
+  "keywords": [
+    "security",
+    "secret-scanner",
+    "ci",
+    "secrets",
+    "token",
+    "api-key"
+  ],
+  "homepage": "https://github.com/cristianquerolalves1/sentinel#readme",
+  "bugs": {
+    "url": "https://github.com/cristianquerolalves1/sentinel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianquerolalves1/sentinel.git"
+  },
+  "license": "MIT",
+  "author": "Cristian Querol Alves",
+  "type": "commonjs",
+  "main": "bin/sentinel.js",
+  "bin": {
+    "sentinel": "bin/sentinel.js"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node bin/sentinel.js",
+    "scan": "node bin/sentinel.js",
+    "test": "jest --verbose"
+  },
+  "dependencies": {
+    "cli-progress": "^3.12.0",
+    "cli-table3": "^0.6.5",
+    "colorette": "^2.0.20",
+    "crypto": "^1.0.1",
+    "he": "^1.2.0",
+    "jsdom": "^22.1.0",
+    "ora": "^9.0.0",
+    "yaml": "^2.2.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
+  }
+}
