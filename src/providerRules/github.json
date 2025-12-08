@@ -1,0 +1,8 @@
+{
+  "rules": [
+    {
+      "name": "github_token",
+      "pattern": "gh[pousr]_[0-9A-Za-z]{36,255}"
+    }
+  ]
+}
