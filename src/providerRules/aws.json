@@ -1,0 +1,12 @@
+{
+  "rules": [
+    {
+      "name": "aws_access_key",
+      "pattern": "AKIA[0-9A-Z]{16}"
+    },
+    {
+      "name": "aws_secret_key",
+      "pattern": "(?<!A-Z0-9)[0-9a-zA-Z/+]{40}(?![0-9a-zA-Z/+])"
+    }
+  ]
+}
