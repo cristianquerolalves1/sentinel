@@ -56,7 +56,7 @@ This documentation covers installation, usage, configuration, advanced features,
 Install the package from npm:
 
 ```bash
-npm install -g sentinel-cqa
+npm install -g sentinel-security
 ```
 
 > [!NOTE]
