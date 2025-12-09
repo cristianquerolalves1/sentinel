@@ -1,6 +1,6 @@
 {
   "name": "@cristianquerolalves/sentinel-security",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Sentinel — Advanced secret scanner (v2) — Code never leaks.",
   "keywords": [
     "security",
@@ -10,7 +10,7 @@
     "token",
     "api-key"
   ],
-  "homepage": "https://github.com/cristianquerolalves1/sentinel#readme",
+  "homepage": "https://sentinel-security-ss.vercel.app/",
   "bugs": {
     "url": "https://github.com/cristianquerolalves1/sentinel/issues"
   },
