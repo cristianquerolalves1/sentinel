@@ -1,12 +1,37 @@
-```diff
-+ ███████╗ ███████╗ ███╗   ██╗ ████████╗ ██╗ ███╗   ██╗ ███████╗ ██╗     
-+ ██╔════╝ ██╔════╝ ████╗  ██║ ╚══██╔══╝ ██║ ████╗  ██║ ██╔════╝ ██║     
-+ ███████╗ █████╗   ██╔██╗ ██║    ██║    ██║ ██╔██╗ ██║ █████╗   ██║     
-+ ╚════██║ ██╔══╝   ██║╚██╗██║    ██║    ██║ ██║╚██╗██║ ██╔══╝   ██║     
-+ ███████║ ███████╗ ██║ ╚████║    ██║    ██║ ██║ ╚████║ ███████╗ ███████╗
-+ ╚══════╝ ╚══════╝ ╚═╝  ╚═══╝    ╚═╝    ╚═╝ ╚═╝  ╚═══╝ ╚══════╝ ╚══════╝
+<p align="center">
 
-```
+<pre style="font-weight:900; font-size:14px; line-height:1.2; color:#3C3BFF; background:transparent;">
+███████╗ ███████╗ ███╗   ██╗ ████████╗ ██╗ ███╗   ██╗ ███████╗ ██╗     
+██╔════╝ ██╔════╝ ████╗  ██║ ╚══██╔══╝ ██║ ████╗  ██║ ██╔════╝ ██║     
+███████╗ █████╗   ██╔██╗ ██║    ██║    ██║ ██╔██╗ ██║ █████╗   ██║     
+╚════██║ ██╔══╝   ██║╚██╗██║    ██║    ██║ ██║╚██╗██║ ██╔══╝   ██║     
+███████║ ███████╗ ██║ ╚████║    ██║    ██║ ██║ ╚████║ ███████╗ ███████╗
+╚══════╝ ╚══════╝ ╚═╝  ╚═══╝    ██║    ╚═╝ ╚═╝  ╚═══╝ ╚══════╝ ╚══════╝
+</pre>
+</p>
+<p align="center" style="margin-top: -10px; margin-bottom: 25px;">
+
+  <img 
+    src="https://img.shields.io/badge/NPM-v1.1.0-000000?style=for-the-badge&labelColor=0d0d0d&color=0a0a0a&logo=npm&logoColor=white"
+    alt="NPM Version"
+  />
+  <img 
+    src="https://img.shields.io/github/stars/cristianquerolalves1/sentinel?style=for-the-badge&labelColor=000000&color=0a0a0a&logo=github&logoColor=white"
+    alt="GitHub Stars"
+  />
+  <a href="mailto:clasallebarceloneta@gmail.com">
+    <img 
+      src="https://img.shields.io/badge/Contact-Mail-000000?style=for-the-badge&labelColor=0d0d0d&color=0a0a0a&logo=minutemailer&logoColor=white"
+      alt="Email"
+    />
+  </a>
+  <img 
+    src="https://img.shields.io/badge/Made%20with-❤️-000000?style=for-the-badge&labelColor=0d0d0d&color=0a0a0a"
+    alt="Made with Love"
+  />
+
+</p>
+
 
 
 Prevent Code Leaks in Your Projects
@@ -24,7 +49,7 @@ This documentation covers installation, usage, configuration, advanced features,
 3. [Usage](#usage)
 4. [Options](#options)
 5. [Architecture](#architecture)
-6. [Scanners](#scanners)
+6. [Scanners](#scanners-details)
 7. [Advanced Examples](#advanced-examples)
 8. [Configuration & Customization](#configuration--customization)
 9. [Reporting](#reporting)
@@ -281,8 +306,38 @@ Sentinel is open-source. Contributions welcome:
 
 ## License
 
-MIT LICENSE
+This project is licensed under the **[MIT License](./LICENSE)**.
+
+You are free to use, modify, distribute, and integrate this software in both  
+open-source and commercial projects — as long as you include the copyright notice below.
+
+</div>
 
 ---
 
-Sentinel provides developers, security engineers, and DevOps teams with a professional, enterprise-ready solution to prevent secrets from leaking and maintain secure codebases.
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<div align="center" style="
+  display: grid;
+  place-items: center;
+  padding: 40px 0;
+  background: #000000;
+  border-radius: 18px;
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 0 25px rgba(255,255,255,0.05);
+">
+  <div style="margin-bottom: 20px;">
+    <img src="https://img.shields.io/badge/MADE%20WITH-%E2%9D%A4-000000?style=for-the-badge&labelColor=000000&color=0d0d0d" alt="made-with-love">
+  </div>
+  <p style="
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #e5e5e5;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0;
+  ">
+    By <span style="color:#ffffff;">Cristian Querol Alves</span>
+  </p>
+
+</div>
