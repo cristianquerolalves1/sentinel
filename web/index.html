@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel Documentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 4rem 6rem;
+            max-width: 800px;
+        }
+        .code-block {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #374151;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        .copy-btn:hover {
+            background: #4b5563;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <h1 class="text-2xl font-bold mb-6">Sentinel</h1>
+        <ul class="space-y-4">
+            <li><a href="#introduction" class="text-blue-600 hover:underline">Introduction</a></li>
+            <li><a href="#features" class="text-blue-600 hover:underline">Features</a></li>
+            <li><a href="#installation" class="text-blue-600 hover:underline">Installation</a></li>
+            <li><a href="#usage" class="text-blue-600 hover:underline">Usage</a></li>
+            <li><a href="#architecture" class="text-blue-600 hover:underline">Architecture</a></li>
+            <li><a href="#custom-rules" class="text-blue-600 hover:underline">Custom Rules</a></li>
+            <li><a href="#reporting" class="text-blue-600 hover:underline">Reporting</a></li>
+            <li><a href="#ci-cd-integration" class="text-blue-600 hover:underline">CI/CD Integration</a></li>
+            <li><a href="#contributing" class="text-blue-600 hover:underline">Contributing</a></li>
+            <li><a href="#license" class="text-blue-600 hover:underline">License</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <section id="introduction" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Introduction</h2>
+            <p class="mb-4">Sentinel is an advanced secret scanner meticulously designed to prevent the leakage of sensitive information such as API keys, credentials, passwords, and other confidential data into public repositories, production environments, or any unintended locations. Built with security in mind, Sentinel empowers developers, security engineers, and DevOps teams to maintain the integrity of their projects by identifying potential vulnerabilities before they become exploits.</p>
+            <p class="mb-4">In today's fast-paced development landscape, where code is shared across teams and integrated into CI/CD pipelines, the risk of accidental secret exposure is ever-present. Sentinel addresses this by combining powerful detection mechanisms including regular expressions (regex), entropy analysis, and heuristic pattern recognition. This multi-layered approach ensures comprehensive coverage, catching even the most subtle leaks that might evade simpler tools.</p>
+            <p class="mb-4">Whether you're scanning a local project directory, integrating into your automated workflows, or customizing rules for specific providers, Sentinel offers flexibility without compromising on performance. It's 100% JavaScript-based, making it lightweight and easy to integrate into Node.js environments. With support for various output formats like terminal logs, JSON, and HTML reports, Sentinel provides actionable insights tailored to your needs.</p>
+            <p class="mb-4">This documentation serves as a complete guide to understanding, installing, and utilizing Sentinel effectively. We delve into each aspect with detailed explanations, code examples, and best practices to ensure you can leverage its full potential in securing your codebase.</p>
+            <a href="https://github.com/cristianquerolalves1/sentinel" class="text-blue-600 hover:underline">View on GitHub</a>
+        </section>
+
+        <section id="features" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Features</h2>
+            <p class="mb-4">Sentinel stands out with its robust set of features, each engineered to provide thorough secret detection while maintaining efficiency and ease of use. Below is a detailed breakdown of its core capabilities:</p>
+            <ul class="list-disc pl-6 space-y-2 mb-4">
+                <li><strong>Regex Scanner:</strong> Utilizes a comprehensive set of predefined regular expressions to detect common secret patterns from providers like AWS, GitHub, Stripe, Google Cloud, Slack, and more. This scanner is highly accurate for known formats, ensuring quick identification of standard credentials.</li>
+                <li><strong>Entropy Scanner:</strong> Analyzes strings for high entropy levels, which are indicative of randomly generated secrets such as passwords or API tokens. By calculating Shannon entropy, it flags potential leaks that don't match fixed patterns but exhibit randomness.</li>
+                <li><strong>Heuristic Scanner:</strong> Employs intelligent keyword detection and contextual analysis to identify suspicious terms like "password", "secret_key", or "token" in code, configurations, or logs. This adds a layer of protection against non-standard or obfuscated secrets.</li>
+                <li><strong>Multi-Format Reporting:</strong> Generates reports in terminal output for immediate feedback, JSON for programmatic parsing, and HTML for visually appealing, shareable summaries. Reports include details like file paths, line numbers, secret types, and matched content.</li>
+                <li><strong>Fast and Deep Scan Modes:</strong> Choose between <code>--fast</code> for regex-only scans in time-sensitive scenarios or <code>--deep</code> for full-spectrum analysis including entropy and heuristics, ideal for thorough audits.</li>
+                <li><strong>Extensibility with Custom Rules:</strong> Easily add or modify detection rules via JSON files, allowing adaptation to organization-specific secrets or emerging threats without altering the core codebase.</li>
+                <li><strong>CI/CD Pipeline Integration:</strong> Seamlessly integrates with tools like GitHub Actions, GitLab CI, and Jenkins. Run scans as part of your build process to enforce security gates and prevent merges with exposed secrets.</li>
+                <li><strong>Deduplication of Findings:</strong> Intelligently removes duplicate detections based on file, line, and content, ensuring clean, non-redundant reports that focus on unique issues.</li>
+                <li><strong>Directory Ignoring:</strong> Exclude non-relevant paths like <code>node_modules</code>, <code>dist</code>, or <code>.git</code> to optimize scan times and reduce false positives from vendor code or binaries.</li>
+            </ul>
+            <p class="mb-4">These features are built on a foundation of performance optimization, making Sentinel suitable for large repositories without significant overhead. In practice, this means faster scans in CI/CD without sacrificing detection accuracy, ultimately fostering a culture of proactive security.</p>
+        </section>
+
+        <section id="installation" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Installation</h2>
+            <p class="mb-4">Installing Sentinel is straightforward, whether you prefer a global CLI tool for quick access or a local setup for development and customization. We recommend Node.js version 18 or higher for compatibility. Below are detailed steps for each method:</p>
+            <h3 class="text-2xl font-semibold mb-2">Global Installation (Recommended for CLI Use)</h3>
+            <p class="mb-2">This method installs Sentinel as a global npm package, allowing you to run it from anywhere via the command line.</p>
+            <div class="code-block">
+                <pre><code class="language-bash">npm install -g sentinel-security</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">After installation, verify by running <code>sentinel --version</code>. This should display the current version, confirming successful setup.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Local Installation (For Development or Customization)</h3>
+            <p class="mb-2">Clone the repository and install dependencies locally if you plan to contribute, modify rules, or integrate deeply into your projects.</p>
+            <div class="code-block">
+                <pre><code class="language-bash">git clone https://github.com/cristianquerolalves1/sentinel.git
+cd sentinel
+npm install
+npm link</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">The <code>npm link</code> command creates a symlink, enabling global CLI access while pointing to your local copy. This is ideal for testing changes.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Best Practices for Installation</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Always exclude directories like <code>.git</code>, <code>node_modules</code>, <code>dist</code>, and <code>build</code> in your scans to avoid unnecessary processing.</li>
+                <li>If encountering permission issues during global install, use <code>sudo</code> or configure npm to install globally without root privileges.</li>
+                <li>For containerized environments (e.g., Docker), add Sentinel to your Dockerfile for reproducible security checks.</li>
+            </ul>
+        </section>
+
+        <section id="usage" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Usage</h2>
+            <p class="mb-4">Sentinel's CLI is intuitive and powerful, with options to tailor scans to your specific needs. All commands require a target directory as the first argument. Here's an in-depth guide to using Sentinel effectively:</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Basic Commands</h3>
+            <p class="mb-2">Start with a simple scan to get familiar:</p>
+            <div class="code-block">
+                <pre><code class="language-bash">sentinel /path/to/your/project</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">This performs a default scan (regex-based) and outputs results to the terminal.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Scan Modes</h3>
+            <ul class="list-disc pl-6 space-y-2 mb-4">
+                <li><strong>Fast Scan:</strong> Quick regex-only detection for rapid checks.</li>
+                <div class="code-block">
+                    <pre><code class="language-bash">sentinel /path/to/project --fast</code></pre>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <li><strong>Deep Scan:</strong> Comprehensive analysis including entropy and heuristics for maximum coverage.</li>
+                <div class="code-block">
+                    <pre><code class="language-bash">sentinel /path/to/project --deep</code></pre>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+            </ul>
+            
+            <h3 class="text-2xl font-semibold mb-2">Advanced Options</h3>
+            <p class="mb-2">Customize your scans with these flags:</p>
+            <table class="table-auto w-full border-collapse border border-gray-300 mb-4">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2">Option</th>
+                        <th class="border px-4 py-2">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--help, -h</code></td>
+                        <td class="border px-4 py-2">Displays detailed help information, including all available commands and options for quick reference.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--version, -V</code></td>
+                        <td class="border px-4 py-2">Outputs the current version of Sentinel, useful for versioning in scripts or troubleshooting.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>&lt;directory&gt;</code></td>
+                        <td class="border px-4 py-2">The required path to the directory you want to scan; can be absolute or relative.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--fast</code></td>
+                        <td class="border px-4 py-2">Enables fast mode, limiting the scan to regex patterns for speed in large repos.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--deep</code></td>
+                        <td class="border px-4 py-2">Activates deep mode, incorporating entropy and heuristic scanners for thorough detection.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--json</code></td>
+                        <td class="border px-4 py-2">Generates a JSON report file (<code>sentinel_report.json</code>) for automated processing or integration with other tools.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--html</code></td>
+                        <td class="border px-4 py-2">Produces an HTML report (<code>sentinel_report.html</code>) with color-coded severity and interactive elements for human review.</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2"><code>--ignore &lt;dirs...&gt;</code></td>
+                        <td class="border px-4 py-2">Specifies space-separated directories to exclude, optimizing scan time and reducing noise.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 class="text-2xl font-semibold mb-2">Example: Deep Scan with Reports and Ignores</h3>
+            <p class="mb-2">For a complete audit:</p>
+            <div class="code-block">
+                <pre><code class="language-bash">sentinel /path/to/project --deep --json --html --ignore node_modules dist test</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4">This command runs a deep scan, generates both JSON and HTML reports, and skips the specified directories to focus on source code.</p>
+        </section>
+
+        <section id="architecture" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Architecture</h2>
+            <p class="mb-4">Sentinel's architecture is modular and extensible, designed for scalability and maintainability. It follows a pipeline-based approach where data flows through distinct stages, each handling a specific aspect of the scanning process. This design allows for easy addition of new scanners or reporters without disrupting existing functionality.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Core Components</h3>
+            <ol class="list-decimal pl-6 space-y-4 mb-4">
+                <li><strong>File Loader:</strong> Recursively traverses the target directory, loading files while respecting ignore patterns. It filters out binary files, large assets, or excluded paths to ensure efficiency. This component uses Node.js's <code>fs</code> module for file I/O, reading content line-by-line to handle large files without memory overload.</li>
+                <li><strong>Scanners:</strong> The heart of Sentinel, comprising three independent modules:
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>RegexScanner:</strong> Loads rules from JSON files in <code>src/scanners/providerRules/</code> and applies them to each line of code. Rules are compiled into RegExp objects for fast matching, supporting global and case-insensitive flags where appropriate.</li>
+                        <li><strong>EntropyScanner:</strong> Implements Shannon entropy calculation on strings exceeding a configurable length threshold. The formula used is <code>H = -sum(p_i * log2(p_i))</code>, where <code>p_i</code> is the probability of each character. Strings with entropy above 3.5 (adjustable) are flagged as potential secrets.</li>
+                        <li><strong>HeuristicScanner:</strong> Scans for keywords in context, using a scoring system based on proximity to assignment operators (e.g., <code>=</code>) or string literals. It avoids false positives by ignoring comments or quoted documentation strings.</li>
+                    </ul>
+                </li>
+                <li><strong>Deduplication Engine:</strong> Processes raw findings, using a hash-based approach (e.g., MD5 of file+line+match) to eliminate duplicates. This ensures reports are concise, especially in repos with repeated code snippets.</li>
+                <li><strong>Reporting Module:</strong> Aggregates results and formats them accordingly. For JSON, it uses <code>JSON.stringify</code> with pretty-printing; for HTML, it generates a static page with tables, CSS for severity (e.g., red for high-risk), and summary statistics like total findings and scan duration.</li>
+            </ol>
+            
+            <p class="mb-4">The entire process is asynchronous where possible, leveraging Promises to handle I/O-bound operations efficiently. In deep mode, scanners run in parallel using <code>Promise.all</code> to minimize latency. This architecture not only ensures high performance but also facilitates testing, as each component can be unit-tested independently.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Repository Structure Overview</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li><code>bin/</code>: Contains the CLI entry point (<code>sentinel</code>), which parses arguments using a library like Commander.js.</li>
+                <li><code>docs/</code>: Houses usage examples, advanced configurations, and API references for developers extending Sentinel.</li>
+                <li><code>src/</code>: Core source code, including scanner utilities, entropy calculators, regex helpers, and rule loaders.</li>
+                <li><code>package.json</code>: Defines dependencies, scripts for building/testing, and CLI bin configuration.</li>
+            </ul>
+        </section>
+
+        <section id="custom-rules" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Custom Rules</h2>
+            <p class="mb-4">One of Sentinel's strengths is its extensibility. You can define custom detection rules to tailor the scanner to your unique environment, such as proprietary API keys or internal credential formats. Rules are stored as JSON files in the <code>src/scanners/providerRules/</code> directory and are automatically loaded during scans.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Creating a Custom Rule File</h3>
+            <p class="mb-2">Each rule file is a JSON object with an array of rules. Here's an extensive example demonstrating various rule types:</p>
+            <div class="code-block">
+                <pre><code class="language-json">{
+  "rules": [
+    {
+      "name": "Custom API Key",
+      "pattern": "custom_[a-zA-Z0-9]{20,40}",
+      "description": "Detects custom API keys starting with 'custom_' followed by 20-40 alphanumeric characters.",
+      "severity": "high",
+      "examples": ["custom_abc123def456ghi789"]
+    },
+    {
+      "name": "Internal Password Pattern",
+      "pattern": "(?i)internal_pass:[a-zA-Z0-9!@#$%]{12,}",
+      "description": "Case-insensitive detection of internal passwords prefixed with 'internal_pass:'.",
+      "severity": "medium",
+      "examples": ["internal_pass:Secure!123456"]
+    },
+    {
+      "name": "Database Connection String",
+      "pattern": "db:\/\/[a-zA-Z0-9]+:[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]{2,3}",
+      "description": "Matches simple database URIs like 'db://user:pass@host.com'.",
+      "severity": "critical",
+      "examples": ["db://admin:secret@localhost.com"]
+    }
+  ]
+}</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">Save this as a new file, e.g., <code>custom.json</code>, in the rules directory. Sentinel will compile the <code>pattern</code> into a RegExp during initialization.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Best Practices for Custom Rules</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Use specific patterns to minimize false positives; test rules against sample code before deployment.</li>
+                <li>Include <code>description</code> and <code>severity</code> fields for better reporting context.</li>
+                <li>For complex patterns, leverage regex features like lookaheads (<code>(?=...)</code>) or groups.</li>
+                <li>Regularly update rules to cover new secret formats from evolving services.</li>
+            </ul>
+            <p class="mt-4">Custom rules are only active in <code>--deep</code> mode, ensuring they integrate seamlessly with built-in scanners.</p>
+        </section>
+
+        <section id="reporting" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Reporting</h2>
+            <p class="mb-4">Sentinel's reporting system is designed for clarity and usability, providing multiple formats to suit different workflows. Reports include metadata like scan mode, duration, total files scanned, and findings categorized by type and severity.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Terminal Output</h3>
+            <p class="mb-2">Default format for interactive use, color-coded for quick scanning (e.g., red for critical findings).</p>
+            <p class="mb-4">Example excerpt:</p>
+            <pre class="bg-gray-800 text-white p-4 rounded"><code>[HIGH] AWS_SECRET_KEY in src/config.js:12 - AKIA************</code></pre>
+            
+            <h3 class="text-2xl font-semibold mb-2">JSON Report</h3>
+            <p class="mb-2">Ideal for automation, parsing, or integration with issue trackers. Generated with <code>--json</code>.</p>
+            <div class="code-block">
+                <pre><code class="language-json">[
+  {
+    "file": "src/config.js",
+    "line": 12,
+    "type": "AWS_SECRET_KEY",
+    "match": "AKIA************",
+    "severity": "high",
+    "scanner": "regex"
+  },
+  {
+    "file": "env/prod.env",
+    "line": 5,
+    "type": "HIGH_ENTROPY",
+    "match": "xYzAbC123!@#RandomString",
+    "severity": "medium",
+    "scanner": "entropy",
+    "entropy_score": 4.2
+  }
+]</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">This array structure allows easy filtering or aggregation using tools like jq.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">HTML Report</h3>
+            <p class="mb-4">Visual report with tables, sortable columns, and color highlights. Includes a summary dashboard with stats. Generated with <code>--html</code>, it's static and shareable via email or web servers.</p>
+        </section>
+
+        <section id="ci-cd-integration" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">CI/CD Integration</h2>
+            <p class="mb-4">Integrating Sentinel into your CI/CD pipelines enforces security as code, preventing merges with exposed secrets. It's lightweight, so it adds minimal build time. Below is a detailed example for GitHub Actions, with adaptations for other platforms.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">GitHub Actions Workflow</h3>
+            <p class="mb-2">Add this YAML to <code>.github/workflows/sentinel-scan.yml</code>:</p>
+            <div class="code-block">
+                <pre><code class="language-yaml">name: Sentinel Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run Sentinel Deep Scan
+        run: npx sentinel-security . --deep --json --html --ignore node_modules dist
+        
+      - name: Upload Scan Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sentinel-report
+          path: |
+            sentinel_report.json
+            sentinel_report.html
+          
+      - name: Fail if Critical Findings
+        run: |
+          if grep -q '"severity": "critical"' sentinel_report.json; then
+            echo "Critical secrets detected! Failing build."
+            exit 1
+          fi</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <p class="mt-4 mb-4">This workflow runs on pushes and PRs, installs Sentinel via npx (no global install needed), performs a deep scan, uploads reports, and optionally fails the build on critical findings using grep.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Adaptations for Other Platforms</h3>
+            <ul class="list-disc pl-6 space-y-2">
+                <li><strong>GitLab CI:</strong> Use <code>image: node:18</code> in <code>.gitlab-ci.yml</code>, add stages for checkout, install, and scan.</li>
+                <li><strong>Jenkins:</strong> In your Jenkinsfile, use <code>sh 'npx sentinel-security . --deep'</code> within a Node.js tool block.</li>
+                <li><strong>Best Practices:</strong> Set thresholds for failure (e.g., >0 high-severity), archive reports for auditing, and notify teams via Slack/email integrations.</li>
+            </ul>
+        </section>
+
+        <section id="contributing" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">Contributing</h2>
+            <p class="mb-4">Sentinel is an open-source project, and contributions are highly encouraged to enhance its capabilities. Whether you're adding new rules, improving performance, fixing bugs, or updating documentation, your input helps make Sentinel better for everyone.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">How to Contribute</h3>
+            <ol class="list-decimal pl-6 space-y-4">
+                <li><strong>Fork the Repository:</strong> Create your own copy on GitHub and clone it locally.</li>
+                <li><strong>Set Up Development Environment:</strong> Run <code>npm install</code> to get dependencies.</li>
+                <li><strong>Make Changes:</strong> Focus on areas like:
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>Adding/improving rules in <code>src/scanners/providerRules/</code>.</li>
+                        <li>Enhancing scanners (e.g., better entropy thresholds or new heuristics).</li>
+                        <li>Optimizing file loading for very large repos.</li>
+                        <li>Adding tests using Jest or similar frameworks.</li>
+                        <li>Improving docs with more examples or visuals.</li>
+                    </ul>
+                </li>
+                <li><strong>Test Your Changes:</strong> Use <code>npm test</code> if tests exist, or manually scan sample repos.</li>
+                <li><strong>Commit and Push:</strong> Use descriptive commit messages, e.g., "feat: add custom rule for Azure keys".</li>
+                <li><strong>Open a Pull Request:</strong> Describe your changes, reference issues, and provide before/after examples.</li>
+            </ol>
+            
+            <p class="mt-4 mb-4">We follow the Contributor Covenant Code of Conduct. For security vulnerabilities, refer to <code>SECURITY.md</code> for responsible disclosure.</p>
+        </section>
+
+        <section id="license" class="mb-12">
+            <h2 class="text-3xl font-bold mb-4">License</h2>
+            <p class="mb-4">Sentinel is released under the MIT License, granting you broad freedoms to use, modify, and distribute the software. This permissive license encourages adoption while requiring preservation of the copyright notice and license text in derivatives.</p>
+            
+            <h3 class="text-2xl font-semibold mb-2">Full License Text</h3>
+            <pre class="bg-gray-100 p-4 rounded border border-gray-300 overflow-auto">
+MIT License
+
+Copyright (c) 2025 Cristian Querol Alves
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+            </pre>
+            <p class="mt-4">By using Sentinel, you agree to these terms. For questions, contact the maintainer via GitHub issues.</p>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        function copyCode(button) {
+            const code = button.previousElementSibling.querySelector('code');
+            navigator.clipboard.writeText(code.textContent).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+</body>
+</html>
