@@ -108,7 +108,7 @@
             <h3 class="text-2xl font-semibold mb-2">Global Installation (Recommended for CLI Use)</h3>
             <p class="mb-2">This method installs Sentinel as a global npm package, allowing you to run it from anywhere via the command line.</p>
             <div class="code-block">
-                <pre><code class="language-bash">npm install -g sentinel-security</code></pre>
+                <pre><code class="language-bash">npm install -g @cristianquerolalves/sentinel-security</code></pre>
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <p class="mt-4 mb-4">After installation, verify by running <code>sentinel --version</code>. This should display the current version, confirming successful setup.</p>
@@ -358,7 +358,7 @@ jobs:
         run: npm ci
         
       - name: Run Sentinel Deep Scan
-        run: npx sentinel-security . --deep --json --html --ignore node_modules dist
+        run: npx @cristianquerolalves/sentinel-security . --deep --json --html --ignore node_modules dist
         
       - name: Upload Scan Report as Artifact
         uses: actions/upload-artifact@v3
@@ -381,7 +381,7 @@ jobs:
             <h3 class="text-2xl font-semibold mb-2">Adaptations for Other Platforms</h3>
             <ul class="list-disc pl-6 space-y-2">
                 <li><strong>GitLab CI:</strong> Use <code>image: node:18</code> in <code>.gitlab-ci.yml</code>, add stages for checkout, install, and scan.</li>
-                <li><strong>Jenkins:</strong> In your Jenkinsfile, use <code>sh 'npx sentinel-security . --deep'</code> within a Node.js tool block.</li>
+                <li><strong>Jenkins:</strong> In your Jenkinsfile, use <code>sh 'npx @cristianquerolalves/sentinel-security . --deep'</code> within a Node.js tool block.</li>
                 <li><strong>Best Practices:</strong> Set thresholds for failure (e.g., >0 high-severity), archive reports for auditing, and notify teams via Slack/email integrations.</li>
             </ul>
         </section>
