@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name('sentinel')
   .description('🛡️ Sentinel CLI — Code never leaks')
-  .version(pkg.version)
+  .version('v.1.3.1')
   .usage('<directory> [options]')
   .showHelpAfterError(true)
   .showSuggestionAfterError(true);
