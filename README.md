@@ -81,7 +81,7 @@ This documentation covers installation, usage, configuration, advanced features,
 Install the package from npm:
 
 ```bash
-npm install -g sentinel-security
+npm install -g @cristianquerolalves/sentinel-security
 ```
 
 > [!NOTE]
@@ -101,7 +101,14 @@ npm link
 Run the CLI:
 
 ```bash
+npm link
 sentinel <command>
+```
+
+Or:
+
+```bash
+node bin/sentinel.js <command>
 ```
 
 **Important:**
