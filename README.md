@@ -12,7 +12,7 @@
 <p align="center" style="margin-top: -10px; margin-bottom: 25px;">
 
   <img 
-    src="https://img.shields.io/badge/NPM-v1.1.0-000000?style=for-the-badge&labelColor=0d0d0d&color=0a0a0a&logo=npm&logoColor=white"
+    src="https://img.shields.io/badge/NPM-v1.1.3.1-000000?style=for-the-badge&labelColor=0d0d0d&color=0a0a0a&logo=npm&logoColor=white"
     alt="NPM Version"
   />
   <img 
